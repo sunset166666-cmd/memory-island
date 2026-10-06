@@ -2280,10 +2280,10 @@ window.addEventListener('focus',()=>{if(AC&&AC.state==='suspended')AC.resume()})
 document.addEventListener('touchend',()=>{if(AC&&AC.state==='suspended')AC.resume()},{passive:true});
 
 // ---------- loop ----------
-let last=performance.now(),tick=0;
+window.__memoryIslandLast=performance.now();let tick=0;
 function loop(now){requestAnimationFrame(loop);try{tickFrame(now)}catch(err){console.error(err)}}
 function tickFrame(now){
- const dt=Math.min((now-last)/1000,.05);last=now;tick++;const tm=now/1000;
+ const dt=Math.min((now-window.__memoryIslandLast)/1000,.05);window.__memoryIslandLast=now;tick++;const tm=now/1000;
  t=(t+dt/150)%1;
  let ix=jx+((keys.d||keys.arrowright)?1:0)-((keys.a||keys.arrowleft)?1:0),iy=jy+((keys.s||keys.arrowdown)?1:0)-((keys.w||keys.arrowup)?1:0);
  const m=Math.hypot(ix,iy);if(m>1){ix/=m;iy/=m}
